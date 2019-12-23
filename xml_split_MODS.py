@@ -1,11 +1,13 @@
 # Split XML containing many <mods> elements into invidual files
 # Modified from script found here: http://stackoverflow.com/questions/36155049/splitting-xml-file-into-multiple-at-given-tags
-# by Bill Levay for California Historical Society
+# and from a script by Bill Levay for California Historical Society
+# New usage for local NOVA repositories by Gregory Pierce
 
 import os, lxml.etree as ET
 # uncomment below modules if doing MODS cleanup on existing Islandora objects
 import codecs, json
 
+# Create a folder and point to it here.  Make sure that the .py file lives in the same folder WITH this folder.
 output_path = 'C:\\Users\\Staff\\Desktop\\Metadata\\SplitMODS_XML\\'
 
 # parse source.xml with lxml
@@ -58,19 +60,6 @@ print("XML is now clean")
 # parse the clean xml
 cleanxml = ET.iterparse('clean.xml', events=('end', ))
 
-###
-# uncomment this section if doing MODS cleanup on existing Islandora objects
-# getting islandora IDs for existing collections
-###
-# item_list = []
-
-# json_path = 'C:\\mods\\data.json'
-
-# with codecs.open(json_path, encoding='utf-8') as filename:
-#     item_list = json.load(filename)
-# filename.close
-###
-
 # find the <mods> nodes
 for event, elem in cleanxml:
     if elem.tag == '{http://www.loc.gov/mods/v3}mods':
@@ -79,18 +68,6 @@ for event, elem in cleanxml:
         # edit the specific element or attribute if necessary
         identifier = elem.find('{http://www.loc.gov/mods/v3}identifier[@type="local"]').text
         filename = format(identifier + "_MODS.xml")
-
-        ### 
-        # uncomment this section if doing MODS cleanup on existing Islandora objects
-        # look through the list of object metadata and get the islandora ID by matching the digital object ID
-        ###
-        # for item in item_list:
-        #     local_ID = item["identifier-type:local"]
-        #     islandora_ID = item["PID"]
-
-        #     if identifier == local_ID:
-        #         filename = format(islandora_ID + "_MODS.xml")
-        ###
 
         # write out to new file
         with open(output_path+filename, 'wb') as f:
