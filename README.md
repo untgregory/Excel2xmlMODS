@@ -8,7 +8,8 @@ files named using the identifier and .xml.
 
 In addition to requiring Python 3, it is also recommended that OpenRefine be downloaded.
 
-Create metadata using the **[MODSExcelTemplate](https://github.com/untgregory/Excel2xmlMODS/blob/master/MODSExcelTemplate.csv)**.  Save the eventual file to be converted as a .csv.
+Create metadata using the **[MODSExcelTemplate](https://github.com/untgregory/Excel2xmlMODS/blob/master/MODSExcelTemplate.csv)**.  For subject and name subject fields (not creators), separate multiple values with "; ".  The OpenRefine template will split them up and give them each their own field.  Save the eventual file to be converted as a .csv.
+
 Create a folder, naming it anything, but keep in mind to change the path accordingly in the **[xml_split_MODS.py](https://github.com/untgregory/Excel2xmlMODS/blob/master/xml_split_MODS.py)**.  This folder
   will be your "output path."  The Python file and later on, the **MODSSource.txt** file can live next to it (not in it).
 
