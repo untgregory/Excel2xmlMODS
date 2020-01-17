@@ -1,17 +1,15 @@
 # Split XML containing many <mods> elements into invidual files
 # Modified from script found here: http://stackoverflow.com/questions/36155049/splitting-xml-file-into-multiple-at-given-tags
 # and from a script by Bill Levay for California Historical Society
-# New usage for local NOVA repositories by Gregory Pierce
+# New usage for local NOVA repositories and updating for Python 3 by Gregory Pierce
 
 import os, lxml.etree as ET
-# uncomment below modules if doing MODS cleanup on existing Islandora objects
-import codecs, json
 
-# Create a folder and point to it here.  Make sure that the .py file lives in the same folder WITH this folder.
-output_path = 'C:\\Users\\Staff\\Desktop\\Metadata\\SplitMODS_XML\\'
+# output and source xml path shown are for server paths and should be changed
+output_path = 'S:\\Digitization\\Metadata\\tools\\XMLcreator\\SplitMODS_XML\\'
 
 # parse source.xml with lxml
-tree = ET.parse('MODSsource.txt')
+tree = ET.parse('S:\\Digitization\\Metadata\\tools\\XMLcreator\\MODSsource.xml')
 
 # start cleanup
 # remove any element tails
@@ -71,7 +69,7 @@ for event, elem in cleanxml:
 
         # write out to new file
         with open(output_path+filename, 'wb') as f:
-            f.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+            f.write("<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n".encode("UTF-8"))
             f.write(ET.tostring(elem, pretty_print = True))
         print("Writing", filename)
 
